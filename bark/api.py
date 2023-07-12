@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union, Dict
 
 import numpy as np
 
@@ -72,6 +72,28 @@ def semantic_to_waveform(
         }
         return full_generation, audio_arr
     return audio_arr
+
+
+def semantic_to_audio_tokens(
+        semantic_tokens: np.ndarray,
+        history_prompt: Optional[Union[Dict, str]] = None,
+        temp: float = 0.7,
+        silent: bool = False,
+        output_full: bool = False,
+):
+    coarse_tokens = generate_coarse(
+        semantic_tokens, history_prompt=history_prompt, temp=temp, silent=silent, use_kv_caching=True
+    )
+    fine_tokens = generate_fine(coarse_tokens, history_prompt=history_prompt, temp=0.5)
+
+    if output_full:
+        full_generation = {
+            "semantic_prompt": semantic_tokens,
+            "coarse_prompt": coarse_tokens,
+            "fine_prompt": fine_tokens,
+        }
+        return full_generation
+    return fine_tokens
 
 
 def save_as_prompt(filepath, full_generation):
