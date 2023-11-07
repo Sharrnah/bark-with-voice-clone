@@ -10,6 +10,7 @@ def text_to_semantic(
     history_prompt: Optional[str] = None,
     temp: float = 0.7,
     silent: bool = False,
+    min_eos_p: float = 0.05,
 ):
     """Generate semantic array from text.
 
@@ -18,6 +19,7 @@ def text_to_semantic(
         history_prompt: history choice for audio cloning
         temp: generation temperature (1.0 more diverse, 0.0 more conservative)
         silent: disable progress bar
+        min_eos_p: controls how likely the generation is to end
 
     Returns:
         numpy semantic array to be fed into `semantic_to_waveform`
@@ -26,6 +28,7 @@ def text_to_semantic(
         text,
         history_prompt=history_prompt,
         temp=temp,
+        min_eos_p=min_eos_p,
         silent=silent,
         use_kv_caching=True
     )
