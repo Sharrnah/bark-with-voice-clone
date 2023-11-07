@@ -113,6 +113,7 @@ def generate_audio(
     history_prompt: Optional[str] = None,
     text_temp: float = 0.7,
     waveform_temp: float = 0.7,
+    min_eos_p: float = 0.05,
     silent: bool = False,
     output_full: bool = False,
 ):
@@ -123,6 +124,7 @@ def generate_audio(
         history_prompt: history choice for audio cloning
         text_temp: generation temperature (1.0 more diverse, 0.0 more conservative)
         waveform_temp: generation temperature (1.0 more diverse, 0.0 more conservative)
+        min_eos_p: controls how likely the generation is to end (lower = earlier?)
         silent: disable progress bar
         output_full: return full generation to be used as a history prompt
 
@@ -133,6 +135,7 @@ def generate_audio(
         text,
         history_prompt=history_prompt,
         temp=text_temp,
+        min_eos_p=min_eos_p,
         silent=silent,
     )
     out = semantic_to_waveform(
