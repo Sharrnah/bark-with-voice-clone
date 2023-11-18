@@ -335,6 +335,20 @@ def preload_models(
     _ = load_codec_model(use_gpu=codec_use_gpu, force_reload=force_reload)
 
 
+def models_to(torch_memory_format=torch.float32):
+    global models
+
+    if "coarse" in models:
+        model = models["coarse"]
+        model.to(torch_memory_format)
+    if "text" in models:
+        model = models["text"]["model"]
+        model.to(torch_memory_format)
+    if "fine" in models:
+        model = models["fine"]
+        model.to(torch_memory_format)
+
+
 ####
 # Generation Functionality
 ####
