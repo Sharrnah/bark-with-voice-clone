@@ -59,8 +59,9 @@ logger = logging.getLogger(__name__)
 CUR_PATH = os.path.dirname(os.path.abspath(__file__))
 
 
-default_cache_dir = os.path.join(os.path.expanduser("~"), ".cache")
-CACHE_DIR = os.path.join(os.getenv("XDG_CACHE_HOME", default_cache_dir), "suno", "bark_v0")
+default_cache_dir = os.path.join(os.path.expanduser("~"), ".cache", "suno", "bark_v0")
+XDG_CACHE_DIR = os.path.join(os.getenv("XDG_CACHE_HOME", default_cache_dir), "suno", "bark_v0")
+CACHE_DIR = os.path.join(os.getenv("CACHE_DIR", XDG_CACHE_DIR))
 
 
 USE_SMALL_MODELS = os.environ.get("SUNO_USE_SMALL_MODELS", False)
